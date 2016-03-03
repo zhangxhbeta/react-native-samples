@@ -18,6 +18,7 @@ cd MyAwesomeApp
 react-native start
 ```
 
-如果在 windows 下面碰到 `ERROR Watcher took too long to load`，可以增加超时时间在这个[文件](https://github.com/facebook/react-native/blob/master/packager/react-packager/src/DependencyResolver/FileWatcher/index.js#L16)里，(文件位于 node_modules/react-native 目录)
 
-If you hit a ERROR Watcher took too long to load on Windows, try increasing the timeout in this file (under your node_modules/react-native).
+如果在 windows 下面碰到 `ERROR Watcher took too long to load`，可以增加超时时间在这个[文件](https://github.com/facebook/react-native/blob/master/packager/react-packager/src/DependencyResolver/FileWatcher/index.js#L16)里，(文件位于 node_modules/react-native 目录) const MAX_WAIT_TIME = 120000;
+
+如果文件链接网页打不开，那么文件位置在 node_modules/react-native/packager/react-packager/src/DependencyResolver/FileWatcher/index.js
