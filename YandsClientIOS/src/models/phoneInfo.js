@@ -4,7 +4,7 @@
 'use strict';
 
 import DeviceInfo from 'react-native-device-info';
-import React from 'react-native';
+import React, { Platform } from 'react-native';
 
 const CarrierInfo = React.NativeModules.RNCarrierInfo;
 
@@ -28,23 +28,38 @@ export default function getPhoneInfo() {
   // TODO 获取位置
 
   return new Promise((fulfill, reject) => {
-    CarrierInfo.carrierName(carrierName => {
-      let ispType = 0;
-      if (carrierName === 'cmcc') {
-        ispType = 1;
-      }
+    if (Platform.OS === 'ios') {
+      CarrierInfo.carrierName(carrierName => {
+        let ispType = 0;
+        if (carrierName === 'cmcc') {
+          ispType = 1;
+        }
+        fulfill({
+          imei: DeviceInfo.getUniqueID(),
+          msid: null,
+          mac: null,
+          osName: 'ios',
+          osVersion: DeviceInfo.getSystemVersion(),
+          phoneType: DeviceInfo.getModel(),
+          ispType: ispType,
+          longitude: null,
+          latitude: null,
+          address: null,
+        });
+      });
+    } else {
       fulfill({
         imei: DeviceInfo.getUniqueID(),
         msid: null,
         mac: null,
-        osName: 'ios',
+        osName: 'android',
         osVersion: DeviceInfo.getSystemVersion(),
         phoneType: DeviceInfo.getModel(),
-        ispType: ispType,
+        ispType: 0,
         longitude: null,
         latitude: null,
         address: null,
       });
-    });
+    }
   });
 }
